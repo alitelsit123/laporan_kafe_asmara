@@ -43,11 +43,11 @@ Analisis
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      <a class="nav-link disabled" href="#revenue-chart" data-toggle="tab">Graph Area</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                    </li>
+                    </li> --}}
                   </ul>
                 </div>
               </div><!-- /.card-header -->
@@ -273,7 +273,7 @@ Analisis
         datasets: [
           {
             data: [30, 12, 20],
-            backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+            backgroundColor: ['#c56901', '#b56930', '#a67901']
           }
         ]
       }

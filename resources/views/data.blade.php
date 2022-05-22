@@ -102,9 +102,9 @@ List Data Pelaporan Kafe Asmara
 
 @section('style')
 <!-- DataTables -->
-<link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 <style>
     .dt-buttons{margin-left: 12px;}
     #table_wrapper{padding-top: 12px;}
@@ -116,18 +116,18 @@ List Data Pelaporan Kafe Asmara
 
 @section('script')
 <!-- DataTables  & Plugins -->
-<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/plugins/jszip/jszip.min.js"></script>
-<script src="/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="{{asset('/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('/plugins/jszip/jszip.min.js')}}"></script>
+<script src="{{asset('/plugins/pdfmake/pdfmake.min.js')}}"></script>
+<script src="{{asset('/plugins/pdfmake/vfs_fonts.js')}}"></script>
+<script src="{{asset('/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script>
 $("#table").DataTable({
     "responsive": true,
