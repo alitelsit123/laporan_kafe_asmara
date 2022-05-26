@@ -1,0 +1,269 @@
+﻿{
+    "items": [
+        {
+            "MENU": "BEVERAGES"
+        },
+        {
+            "MENU": "Black coffee",
+            "HARGA": "Rp.15.000"
+        },
+        {
+            "MENU": "Coffee milk",
+            "HARGA": "Rp.16.000"
+        },
+        {
+            "MENU": "Cappucino",
+            "HARGA": "Rp.15.000"
+        },
+        {
+            "MENU": "Coffeemate",
+            "HARGA": "Rp.20.000"
+        },
+        {
+            "MENU": "Espresso",
+            "HARGA": "Rp.20.000"
+        },
+        {
+            "MENU": "Chocolate",
+            "HARGA": "Rp.15.000"
+        },
+        {
+            "MENU": "Milk tea",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Strawberry juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Guava juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Banana juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Avocado juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Apple juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Melon juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Dragon fruit juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Mango juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Lime juice",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Wedang uwuh",
+            "HARGA": "Rp.15.000"
+        },
+        {
+            "MENU": "STMJ",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Jahe gepuk",
+            "HARGA": "Rp.15.000"
+        },
+        {
+            "MENU": "Jahe lemon madu",
+            "HARGA": "Rp.20.000"
+        },
+        {
+            "MENU": "Air Mineral",
+            "HARGA": "Rp.5.000"
+        },
+        {
+            "MENU": "Es",
+            "HARGA": "Rp.1.000"
+        },
+        {
+            "MENU": "Brazillian Drinks"
+        },
+        {
+            "MENU": "Brazilian orange juice",
+            "HARGA": "Rp.30.000"
+        },
+        {
+            "MENU": "Pineapple & sugar ice",
+            "HARGA": "Rp.20.000"
+        },
+        {
+            "MENU": "Brazilian cafe latte",
+            "HARGA": "Rp.30.000"
+        },
+        {
+            "MENU": "Brazilian style tea",
+            "HARGA": "Rp.12.000"
+        },
+        {
+            "MENU": "Brazilian lemon tea",
+            "HARGA": "Rp.15.000"
+        },
+        {
+            "MENU": "Brazilian mojito",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Beer"
+        },
+        {
+            "MENU": "Bintang",
+            "HARGA": "Rp.55.000"
+        },
+        {
+            "MENU": "Anker",
+            "HARGA": "Rp.55.000"
+        },
+        {
+            "MENU": "Proost",
+            "HARGA": "Rp.50.000"
+        },
+        {
+            "MENU": "Kuda putih",
+            "HARGA": "Rp.55.000"
+        },
+        {
+            "MENU": "Bali hai",
+            "HARGA": "Rp.50.000"
+        },
+        {
+            "MENU": "Draft",
+            "HARGA": "Rp.50.000"
+        },
+        {
+            "MENU": "Anker stout",
+            "HARGA": "Rp.45.000"
+        },
+        {
+            "MENU": "Bintang radler",
+            "HARGA": "Rp.30.000"
+        },
+        {
+            "MENU": "Bintang tower",
+            "HARGA": "Rp.230.000"
+        },
+        {
+            "MENU": "Anker tower",
+            "HARGA": "Rp.230.000"
+        },
+        {
+            "MENU": "Prost tower",
+            "HARGA": "Rp.210.000"
+        },
+        {
+            "MENU": "Kuda putih tower",
+            "HARGA": "Rp.230.000"
+        },
+        {
+            "MENU": "Bali hai tower",
+            "HARGA": "Rp.210.000"
+        },
+        {
+            "MENU": "Draft tower",
+            "HARGA": "Rp.210.000"
+        },
+        {
+            "MENU": "By Glass"
+        },
+        {
+            "MENU": "Kambucha",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Screwdriver",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Mojito",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Cuba libre",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Red wine – plaga",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Iceland vodka",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Red royale whiskey",
+            "HARGA": "Rp.65.000"
+        },
+        {
+            "MENU": "Bottles"
+        },
+        {
+            "MENU": "Anggur orang tua + beer",
+            "HARGA": "Rp.200.000"
+        },
+        {
+            "MENU": "White royale soju",
+            "HARGA": "Rp.150.000"
+        },
+        {
+            "MENU": "Iceland vodka bottles",
+            "HARGA": "Rp.450.000"
+        },
+        {
+            "MENU": "Red royale whiskey",
+            "HARGA": "Rp.625.000"
+        },
+        {
+            "MENU": "Salad"
+        },
+        {
+            "MENU": "Avocado salad",
+            "HARGA": "Rp.35.000"
+        },
+        {
+            "MENU": "Manado salad",
+            "HARGA": "Rp.45.000"
+        },
+        {
+            "MENU": "Piri-piri chicken salad",
+            "HARGA": "Rp.60.000"
+        },
+        {
+            "MENU": "Apppetisers"
+        },
+        {
+            "MENU": "Fried cassava",
+            "HARGA": "Rp.30.000"
+        },
+        {
+            "MENU": "French fries",
+            "HARGA": "Rp.25.000"
+        },
+        {
+            "MENU": "Potato wedges",
+            "HARGA": "Rp.30.000"
+        },
+        {
+            "MENU": "Piri-piri chicken pastrie",
+            "HARGA": "Rp.35.000"
+        },
+        {
+            "MENU": "French ckicken wings",
+            "HARGA": "Rp.25.000"
+        }
+    ]
+}
