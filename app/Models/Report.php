@@ -13,4 +13,8 @@ class Report extends Model
     public $fillable = [
         'name', 'total_income', 'tanggal'
     ];
+
+    public function details() {
+        return $this->hasMany('App\Models\ReportDetail', 'report_id');
+    }
 }

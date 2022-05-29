@@ -76,6 +76,12 @@ class HomeController extends Controller
         ->sortBy('tanggal');
         $realDataYears = array_column($dataYears->toArray(), 'total_income');
 
+
         return view('chart', compact('year', 'labelYears', 'realDataYears', 'dataYears','datas', 'totalDays', 'labelMonths','labels',$dataMonths ? 'dataMonths': null, 'realData'));
+    }
+    public function detailData($slug) {
+        $report = Report::findOrFail($slug);
+        $details = $report->details;
+        return view('detail-data', compact('report','details'));
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReportsTable extends Migration
+class CreateReportDetailsSeeder extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('report_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->bigInteger('total_income')->nullable();
-            $table->date('tanggal')->nullable();
+            $table->bigInteger('sub_total');
+            $table->integer('quantity');
+            $table->foreignId('report_id')->nullable()->constrained();
+            $table->foreignId('product_id')->nullable()->constrained();
         });
     }
 
@@ -28,6 +29,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('report_details');
     }
 }

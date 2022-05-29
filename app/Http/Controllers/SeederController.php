@@ -1,23 +1,15 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Seeder;
-
+use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Report;
 use App\Models\ReportDetail;
-use Carbon\Carbon;
 
-class ReportSeeder extends Seeder
+class SeederController extends Controller
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+    public function reportSeeder() {
         ReportDetail::query()->delete();
         Report::query()->delete();
 
@@ -48,15 +40,45 @@ class ReportSeeder extends Seeder
                 $report->details()->create([
                     'sub_total' => $subTotal,
                     'quantity' => $quantity,
-                    'product_id' => $rowProduct->id
                 ]);
             }
 
-            $report->total_income = $report->total_income;
-            $report->save();
-
             echo 'Total Item '.$report->details->sum('quantity').'<br />';
             echo 'Total Income '.$report->total_income.'<br /><br />';
+        }
+    }
+    public function productSeeder() {
+        Product::query()->delete();
+
+
+        $product_list = \file_get_contents("C:\Users\alitelsit1\Documents\apps\laporan_kafe_asmara\produk_kafe_asmara.json");
+        // $product_list = preg_replace('/\s+/', '',$product_list);
+        $product_list = str_replace('ï»¿', '',utf8_encode($product_list));
+        $products = \json_decode($product_list,true);
+        $products = $products['items'];
+        $products = array_map(function($item) {
+            if(isset($item['HARGA'])) {
+                $price = \str_replace('Rp.', '', $item['HARGA']);
+                $price = str_replace('.', '', $price);
+                return [
+                    'HARGA' => $price,
+                    'MENU' => $item['MENU'],
+                ];
+            }
+            return $item;
+        }, $products);
+
+
+        foreach($products as $row) {
+            if(isset($row['HARGA'])) {
+                Product::create([
+                    'name' => $row['MENU'],
+                    'price' => $row['HARGA']
+                ]);
+
+                echo 'Name: '.$row['MENU'].'<br />';
+                echo 'PRICE: '.$row['HARGA'].'<br /><br />';
+            }
         }
     }
 }
