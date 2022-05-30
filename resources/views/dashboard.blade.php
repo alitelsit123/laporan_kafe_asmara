@@ -35,13 +35,16 @@ Dashboard Pelaporan Kafe Asmara
             <div class="small-box bg-info">
               <div class="inner">
                 <h3>Rp. {{ number_format($totalIncome) }}</h3>
-
-                <p>Total Pendapatan</p>
+                @php
+                  $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Desember'];
+                  $currentMonth = date('m');
+                @endphp
+                <p>Total Pendapatan Bulan {{ $monthList[$currentMonth-1] }}</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{url('/chart?filter_month_product='.$monthList[(int)$currentMonth-1])}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -56,7 +59,7 @@ Dashboard Pelaporan Kafe Asmara
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{url('/dataset')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

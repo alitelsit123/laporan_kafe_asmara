@@ -10,10 +10,9 @@ use App\Models\ReportDetail;
 class SeederController extends Controller
 {
     public function reportSeeder() {
-        ReportDetail::query()->delete();
-        Report::query()->delete();
+        $lastTime = Report::orderByDesc('tanggal')->first()->tanggal;
 
-        $period = \Carbon\CarbonPeriod::create('2022-01-01', date('Y-m-d'));
+        $period = \Carbon\CarbonPeriod::create($lastTime, date('Y-m-d'));
 
         $minIncome = '65000';
         $maxIncome = '200000';
@@ -23,6 +22,11 @@ class SeederController extends Controller
         foreach($period as $row) {
             $name = $row->format('d-m-Y');
             $dateStr = $row->format('Y-m-d');
+            if($dateStr === $lastTime) {
+                continue;
+            }
+
+
             $firstPrefixIncomeRange = (string)mt_rand(150, 1500);
             $report = Report::create([
                 'name' => 'laporan ('.$name.')',
@@ -30,22 +34,34 @@ class SeederController extends Controller
                 'tanggal' => $dateStr
             ]);
 
-            echo 'Report '.$report->name.'<br />';
+            print('Report '.$report->name.'\n');
 
-            $totalProduct = \mt_rand(3,15);
+            $totalProduct = \mt_rand(3,8);
             $detailProduct = $products->shuffle()->take($totalProduct);
-            foreach($detailProduct as $rowProduct) {
-                $quantity = \mt_rand(2, 8);
+            $detailProduct = $detailProduct->values();
+            $detailItems = $detailProduct->map(function($rowProduct) {
+                $quantity = \mt_rand(1, 5);
                 $subTotal = $rowProduct->price * $quantity;
-                $report->details()->create([
+                return [
                     'sub_total' => $subTotal,
                     'quantity' => $quantity,
-                ]);
-            }
+                    'product_id' => $rowProduct->id
+                ];
+            });
 
-            echo 'Total Item '.$report->details->sum('quantity').'<br />';
-            echo 'Total Income '.$report->total_income.'<br /><br />';
+            $report->details()->createMany($detailItems);
+
+            $report->total_income = $report->details()->sum('sub_total');
+            $report->save();
+
+            print('Total Item '.$report->details->sum('quantity').'\n');
+            print('Total Income '.$report->total_income.'\n\n');
         }
+
+        return back();
+    }
+    public function checkSeeder() {
+        return dd(Product::doesntHave('solds')->get());
     }
     public function productSeeder() {
         Product::query()->delete();

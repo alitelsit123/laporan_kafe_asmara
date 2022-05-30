@@ -33,11 +33,23 @@ List Data Pelaporan Kafe Asmara
           <div class="col-md-12">
             <div class="card">
                 <div class="card-header align-items-center">
-                  <h3 class="card-title">Per Januari 2022</h3>
+                  <h3 class="card-title">Per Januari 2022 <small><i>Record terakhir {{ \App\Models\Report::orderByDesc('tanggal')->first()->tanggal }}</i></small></h3>
 
-                  {{-- <div class="card-tools">
-                    <button type="button" class="btn btn-primary btn-xs">Export</button>
-                  </div> --}}
+                  @if(\App\Models\Report::orderByDesc('tanggal')->first()->tanggal !== date('Y-m-d'))
+                  <div class="card-tools">
+                    <a href="{{ url('/dataset-report-seeder') }}" id="generate-data" class="btn btn-primary btn-xs" onclick="confirm('Refresh data membutuhkan waktu 5-10 menit, yakin ingin meneruskan aksi ?')">
+                      <i class="fas fa-sync mr-1" style="color:white;"></i>
+                      Generate Data Baru
+                    </a>
+                  </div>
+                  @else 
+                  <div class="card-tools">
+                    <a href="#" title="Tidak bisa generate, data sudah update!" id="generate-data" class="btn btn-primary btn-xs disabled">
+                      <i class="fas fa-sync mr-1" style="color:white;"></i>
+                      Generate Data Baru
+                    </a>
+                  </div>
+                  @endif
                 </div>
                 <!-- /.card-header -->
                 @php
@@ -60,7 +72,7 @@ List Data Pelaporan Kafe Asmara
                         <td style="width: 10px!important">{{ (++$no) }}</td>
                         <td style="width: 20%!important">{{\ucfirst($row->name)}}</td>
                         <td>
-                            Rp. {{number_format($row->total_income)}}
+                            Rp. {{$row->total_income}}
                         </td>
                         <td>{{ $row->tanggal }}</td>
                         <td class="text-center d-flex justify-content-center">
@@ -79,6 +91,7 @@ List Data Pelaporan Kafe Asmara
                             <th>Nama</th>
                             <th>Total Pendapatan</th>
                             <th>Tanggal</th>
+                            <th>#</th>
                         </tr>
                     </tfoot>
                   </table>
@@ -150,5 +163,6 @@ $("#table").DataTable({
         }
     ]
 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
 </script>
 @endsection

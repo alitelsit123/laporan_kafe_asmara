@@ -13,4 +13,11 @@ class Product extends Model
     protected $fillable = [
         'name', 'price'
     ];
+
+    public function solds() {
+        return $this->hasMany('App\Models\ReportDetail', 'product_id');
+    }
+    public function reports() {
+        return $this->belongsToMany('App\Models\Report', 'report_details','product_id','report_id');
+    }
 }

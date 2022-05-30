@@ -5,6 +5,12 @@ Analisis
 @endsection
 
 @section('content')
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -105,6 +111,9 @@ Analisis
                     <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
                   </div>
                 </div>
+
+
+
               </div><!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -114,6 +123,67 @@ Analisis
 
           </section>
           <!-- /.Left col -->
+
+          <section class="col-lg-12 connectedSortable">
+
+            <!-- solid sales graph -->
+            <div class="card">
+              <div class="card-header border-0">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-area mr-1"></i>
+                    Products
+                    <i style="color:gray;font-size: 12px;">Tahun: 2022</i>
+                  
+                </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  {{-- <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button> --}}
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="mb-4">
+                  @php
+                    $intersectLabels = \array_slice($labelMonths,0,sizeof($dataMonths));
+                    
+                  @endphp
+                  @foreach ($intersectLabels as $row)
+                    @php
+                      $currentFilterMonthProduct = $filterMonthProduct;
+                      if(!\in_array($row,$filterMonthProduct)) {
+                        $currentFilterMonthProduct = array_merge($filterMonthProduct, [$row]);
+                      } else {
+                        if (($key = array_search($row, $currentFilterMonthProduct)) !== false) {
+                            unset($currentFilterMonthProduct[$key]);
+                        }
+                      }
+                      $currentFilterMonthProduct = \implode(',',$currentFilterMonthProduct);
+                    @endphp
+                    <a title="Filter {{$row}}" href="{!! url()->current().'?'.\http_build_query(array_merge(request()->query(), [
+                      'filter_month_product' => $currentFilterMonthProduct
+                    ])) !!}" class="btn btn-xs @if(in_array($row,$filterMonthProduct)) btn-success @else btn-default @endif">
+                      @if(\in_array($row,$filterMonthProduct))
+                        <i class="fas fa-check"></i>
+                      @endif
+                      {{ $row }}
+                    </a>
+                  @endforeach
+                </div>
+                <canvas class="chart" id="productChart" style="min-height: 250px; height: 400px; 1000px"></canvas>
+              </div>
+              <!-- /.card-body -->
+
+            </div>
+            <!-- /.card -->
+
+
+          </section>
+
+
           <!-- right col (We are only adding the ID to make the widgets sortable)-->
           <section class="col-lg-12 connectedSortable">
 
@@ -247,6 +317,10 @@ Analisis
             }
           }],
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Total Income (Rupiah)'
+            },
             gridLines: {
               display: false
             }
@@ -355,5 +429,58 @@ Analisis
         options: salesGraphChartOptions
       })
 
+    </script>
+
+    <script>
+      const dataProduct = {
+        labels: JSON.parse('{!! \json_encode($productLabels) !!}'),
+        datasets: [
+          @php
+            $qMonth = array_values($qMonth);
+          @endphp
+          @foreach ($qMonth as $row)
+            @php
+              $products = Illuminate\Support\Facades\DB::select('SELECT sum(report_details.quantity) as solds_sum_quantity FROM `report_details` inner join reports on reports.id = report_details.report_id where MONTH(reports.tanggal) = '.$row.' group by report_details.product_id');
+              // dd(sizeof($products));
+              $productQuantity = array_map(function($item) {
+                return $item->solds_sum_quantity;
+              },$products);
+              @endphp
+            {
+              label: '{{ 'Bulan '.$labelMonths[$row-1] }}',
+              borderColor: '{{$labelColors[$row-1]}}',
+              borderWidth: 1,
+              backgroundColor: 'transparent',
+              data: JSON.parse('{!! \json_encode($productQuantity) !!}'),
+              minBarLength: 0
+            },
+          @endforeach
+        ]
+      };
+      const configProduct = {
+        type: 'line',
+        data: dataProduct,
+        options: {
+          scaleShowValues: true,
+          scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Kuantitas'
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                autoSkip: false
+              }
+            }]
+          }
+        }
+      };
+
+      const myChart = new Chart(
+        document.getElementById('productChart'),
+        configProduct
+      );
     </script>
 @endsection

@@ -52,9 +52,12 @@
                     </p>
                 </a>
             </li>
-
+            @php
+              $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Desember'];
+              $currentMonth = date('m');
+            @endphp
             <li class="nav-item">
-                <a href="{{url('/chart')}}" class="nav-link">
+                <a href="{{url('/chart?filter_month_product='.$monthList[(int)$currentMonth-1])}}" class="nav-link">
                     <i class="nav-icon fas fa-chart-area"></i>
                     <p>
                         Charts

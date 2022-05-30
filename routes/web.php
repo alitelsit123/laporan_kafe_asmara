@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('seed')->group(function() {
     Route::get('product', [App\Http\Controllers\SeederController::class, 'productSeeder']);
     Route::get('report', [App\Http\Controllers\SeederController::class, 'reportSeeder']);
+    Route::get('check', [App\Http\Controllers\SeederController::class, 'checkSeeder']);
 });
 
 Route::get('login', [App\Http\Controllers\LoginController::class, 'showLogin'])->name('login');
@@ -26,8 +27,8 @@ Route::get('logout', [App\Http\Controllers\LoginController::class, 'logout']);
 Route::middleware('auth')->group(function() {
     Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/dataset', [\App\Http\Controllers\HomeController::class, 'listData']);
+    Route::get('/dataset-report-seeder', [\App\Http\Controllers\SeederController::class, 'reportSeeder']);
     Route::get('/dataset-{slug}', [\App\Http\Controllers\HomeController::class, 'detailData']);
     Route::get('/chart', [\App\Http\Controllers\HomeController::class, 'chart']);
 });
-
 

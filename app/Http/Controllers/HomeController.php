@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Report;
+use App\Models\ReportDetail;
 use App\Models\User;
+use App\Models\Product;
 use App\Support\Database\DB;
 use Carbon\Carbon;
 
@@ -13,14 +15,14 @@ class HomeController extends Controller
     public function index() {
         $reports = Report::all();
         $users = User::all();
-        $totalIncome = $reports->sum('total_income');
+        $totalIncome = Report::selectRaw('sum(total_income) as total_income')->groupByRaw('MONTH(tanggal)')->whereRaw('MONTH(tanggal) = '.date('m'))->sum('total_income');
         $totalData = $reports->count();
         $totalAdmin = $users->count();
         return view('dashboard', compact('totalIncome', 'totalData', 'totalAdmin'));
     }
 
     public function listData() {
-        $datas = Report::orderByDesc('id')->get();
+        $datas = Report::orderByDesc('tanggal')->get();
         return view('data', compact('datas'));
     }
 
@@ -57,6 +59,7 @@ class HomeController extends Controller
             $currentMonth = Carbon::parse('2022-'.(request('chart_month') ? request('chart_month'): date('m')).'-01');
             $totalDays = $currentMonth->daysInMonth;
         }
+        $labelColors = ['red','green','yellow','black','purple','blue','lime','silver','gray','maroon','aqua','olive'];
 
         $datas = $defaultQuery->toArray();
         if(isset($defaultQuerys)) {
@@ -76,8 +79,79 @@ class HomeController extends Controller
         ->sortBy('tanggal');
         $realDataYears = array_column($dataYears->toArray(), 'total_income');
 
+        // $products = Product::withSum('solds','sub_total')->withSum('solds','quantity')->orderBy('name', 'desc');
+        $products = null;
+        $detail_products = ReportDetail::selectRaw('MONTH(reports.tanggal) month,sum(report_details.sub_total) as solds_sum_sub_total,sum(report_details.quantity) as solds_sum_quantity')
+        ->join('reports', 'reports.id', 'report_details.report_id')
+        ->orderByRaw('MONTH(reports.tanggal)');
+        // return dd($detail_products);
+        $filterMonthProduct = request('filter_month_product');
+        $qiMonth = '';
+        $qMonth = [];
+        if($filterMonthProduct && $filterMonthProduct !=='all') {
+            $filterMonthProduct = explode(',',$filterMonthProduct);
+            $strFilterMonth = '\''.\implode('\',\'',$filterMonthProduct).'\'';
+            foreach($filterMonthProduct as $rowMFilter) {
+                $key = array_search($rowMFilter, $labelMonths);
+                if($key !== false) {
+                    if($key <= 9) {
+                        array_push($qMonth,($key+1));
+                    } else {
+                        array_push($qMonth,$key+1);
+                    }
+                }
+            }
+            $qiMonth = '\''.\implode('\',\'',$qMonth).'\'';
+            $detail_products = $detail_products
+            ->groupByRaw('MONTH(reports.tanggal)')
+            ->whereRaw('MONTH(reports.tanggal) in ('.$qiMonth.')');
+            // return var_dump($qMonth);
+        } else {
+            $filterMonthProduct = [];
+            $strFilterMonth = '\''.\implode('\',\'',$filterMonthProduct).'\'';
+            foreach($labelMonths as $rowMFilter) {
+                $key = array_search($rowMFilter, $labelMonths);
+                if($key !== false) {
+                    if($key <= 9) {
+                        array_push($qMonth,($key+1));
+                    } else {
+                        array_push($qMonth,$key+1);
+                    }
+                }
+            }
+            $qiMonth = '\''.\implode('\',\'',$qMonth).'\'';
+            $detail_products = $detail_products
+            ->groupByRaw('MONTH(reports.tanggal)');
+        }
 
-        return view('chart', compact('year', 'labelYears', 'realDataYears', 'dataYears','datas', 'totalDays', 'labelMonths','labels',$dataMonths ? 'dataMonths': null, 'realData'));
+        $detail_products = $detail_products->get();
+
+        $qmonth = collect($qMonth)->sort()->all();
+
+
+        $productLabels = Product::has('solds')->get();
+        $productLabels = $productLabels->map(function($item){
+            return $item->name;
+        });
+
+        return view('chart', compact(
+            'labelColors',
+            'qMonth',
+            'detail_products',
+            'filterMonthProduct',
+            'products', 
+            'productLabels',
+            'year', 
+            'labelYears', 
+            'realDataYears', 
+            'dataYears',
+            'datas', 
+            'totalDays', 
+            'labelMonths',
+            'labels',
+            $dataMonths ? 'dataMonths': null, 
+            'realData'
+        ));
     }
     public function detailData($slug) {
         $report = Report::findOrFail($slug);
